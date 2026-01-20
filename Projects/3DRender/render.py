@@ -60,7 +60,7 @@ with open("step1.png", "rb") as f:
 # We instruct the model to act as a 3D artist
 prompt = """
 The file is a 2d floor plan image with a red square at each door location. 
-Remove borders and any excess white space around the edges of the image.#
+Remove borders and any excess white space around the edges of the image.
 Increase the image to high resolution.
 ** IT IS CRITICAL THAT THE FINAL IMAGE HAS THE SAME RED BLOCKS LABELLED WITH THE SAME TEXT CONTENT **
 For each red square with a blue label, make the label look nice.
@@ -69,7 +69,13 @@ drawing lines or other text.
 
   """
 
+prompt = """
+The file is a 2d floor plan.
+Generate a 3d render of the floor plan.
+Ensure that the floor covering is white and the walls are grey.
+Highlight colours can be tints of html colour #fed103
 
+"""
 
 # 5. Send the request
 try:
