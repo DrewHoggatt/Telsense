@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Vintage Balance</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette inspired by vintage dials and aged lume */
+            --bg-color: #FDFBF7; /* Cream/Off-white */
+            --text-color: #2C2C2C; /* Soft Black */
+            --accent-color: #A38F6D; /* Antique Gold/Brass */
+            --secondary-text: #666666;
+            --gap-size: 2rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Lato', sans-serif;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Layout Utilities */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 6rem 0;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 8rem 0 6rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--secondary-text);
+            font-weight: 300;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--gap-size);
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            background: #f0f0f0;
+            aspect-ratio: 1 / 1.2; /* Slightly taller than square for portrait shots */
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            filter: grayscale(10%) contrast(95%); /* Subtle vintage film look */
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.03);
+            filter: grayscale(0%) contrast(100%);
+        }
+
+        .caption-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+            color: white;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover .caption-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .caption-overlay span {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 4rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } /* Simple hiding for mobile for this demo */
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav>
+            <div class="brand"><a href="#">The Vintage Balance</a></div>
+            <div class="nav-links">
+                <a href="#">Collection</a>
+                <a href="#">Journal</a>
+                <a href="https://www.instagram.com/thevintagebalance/" target="_blank">Instagram</a>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <h1>Curating Time &amp; History</h1>
+            <p>A celebration of mechanical artistry. Exploring the nuances of vintage horology through a lens of balance and restraint.</p>
+        </section>
+
+        <section class="section">
+            <div class="gallery-grid">
+                {% for image in images %}
+                <div class="gallery-item">
+                    <img src="{{ image.url }}" alt="Vintage Watch - {{ image.caption }}" loading="lazy">
+                    <div class="caption-overlay">
+                        <span>{{ image.caption }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; {{yearNow}} The Vintage Balance. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.7;">Images sourced for demonstration purposes.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
