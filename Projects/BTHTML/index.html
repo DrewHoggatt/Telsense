@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Wi-Fi Setup</title>
+    <style>
+        body { font-family: sans-serif; max-width: 400px; margin: 40px auto; padding: 20px; text-align: center; }
+        input { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #0056b3; }
+        #status { margin-top: 20px; font-weight: bold; color: #333; }
+    </style>
+</head>
+<body>
+
+    <h2>Connect ESP32 to Wi-Fi</h2>
+    <p>Enter your network details below, then click to send them via Bluetooth.</p>
+
+    <input type="text" id="ssid" placeholder="Wi-Fi Network Name (SSID)" required>
+    <input type="password" id="password" placeholder="Wi-Fi Password" required>
+    
+    <button id="connectBtn">Connect to ESP32 & Send</button>
+    <div id="status">Status: Waiting...</div>
+
+    <script>
+        // These UUIDs must exactly match the ones you set in your MicroPython code!
+        const SERVICE_UUID = '12345678-1234-5678-1234-56789abcdef0';
+        const CHARACTERISTIC_UUID = '12345678-1234-5678-1234-56789abcdef1';
+
+        document.getElementById('connectBtn').addEventListener('click', async () => {
+            const ssid = document.getElementById('ssid').value;
+            const password = document.getElementById('password').value;
+            const statusText = document.getElementById('status');
+
+            if (!ssid || !password) {
+                statusText.innerText = "Status: Please enter both SSID and Password.";
+                return;
+            }
+
+            try {
+                statusText.innerText = "Status: Requesting Bluetooth Device...";
+                
+                // 1. Ask the browser to find our ESP32
+                const device = await navigator.bluetooth.requestDevice({
+                    filters: [{ name: 'ESP32-Setup' }],
+                    optionalServices: [SERVICE_UUID]
+                });
+
+                statusText.innerText = "Status: Connecting to GATT Server...";
+                
+                // 2. Connect to the device
+                const server = await device.gatt.connect();
+                
+                // 3. Find our specific Service and Characteristic
+                const service = await server.getPrimaryService(SERVICE_UUID);
+                const characteristic = await service.getCharacteristic(CHARACTERISTIC_UUID);
+
+                statusText.innerText = "Status: Sending Wi-Fi Credentials...";
+
+                // 4. Format the data as "SSID,Password" and encode it to bytes
+                const credentials = `${ssid},${password}`;
+                const encoder = new TextEncoder();
+                const data = encoder.encode(credentials);
+
+                // 5. Send the data to the ESP32
+                await characteristic.writeValue(data);
+
+                statusText.innerText = "Status: Credentials Sent Successfully!";
+                
+                // Disconnect after sending
+                device.gatt.disconnect();
+
+            } catch (error) {
+                console.error(error);
+                statusText.innerText = `Status: Error - ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
