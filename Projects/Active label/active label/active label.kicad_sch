@@ -7522,22 +7522,20 @@
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "Y"
-				(at 8.89 6.35 0)
+			(property "Reference" "Y1"
+				(at 5.08 8.89 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left top)
 				)
 			)
 			(property "Value" "X32K768S021"
-				(at 8.89 3.81 0)
+				(at 5.842 6.604 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left top)
 				)
 			)
 			(property "Footprint" "X32K768S021"
@@ -7561,6 +7559,23 @@
 				)
 			)
 			(property "Description" "Crystal SMD 32.768KHz"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "FirecoPN" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Manufacturer" ""
 				(at 0 0 0)
 				(effects
 					(font
@@ -7616,6 +7631,15 @@
 						(size 1.27 1.27)
 					)
 					(justify left top)
+					(hide yes)
+				)
+			)
+			(property "ManufacturerPN" "X32K768S021"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
 					(hide yes)
 				)
 			)
@@ -7700,14 +7724,14 @@
 				(pin passive line
 					(at 10.16 0 180)
 					(length 2.54)
-					(name "2"
+					(name "4"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "2"
+					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -12463,7 +12487,24 @@
 				(hide yes)
 			)
 		)
-		(pin "2"
+		(property "FirecoPN" ""
+			(at 66.04 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 66.04 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
 			(uuid "ff31e6d8-44f0-49cb-82b0-fb1171f15b2c")
 		)
 		(pin "1"
