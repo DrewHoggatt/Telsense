@@ -490,7 +490,7 @@
       "plot": "Gerbers/",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "active label.step",
+      "step": "active label.stl",
       "svg": "",
       "vrml": ""
     },
